@@ -17,7 +17,8 @@ namespace Looplex.OpenForExtension.Contexts
         public Stack<Func<Task>> RollBackActions { get; } = new Stack<Func<Task>>();
         public async Task DoRollBack(Func<IContext, Task> logAction = null)
         {
-            while (RollBackActions != null && RollBackActions.Count > 0)
+            var rollbackErrors = new List<Exception>();
+            while (RollBackActions.Count > 0)
             {
                 var undoAction = RollBackActions.Pop();
                 try
@@ -26,25 +27,26 @@ namespace Looplex.OpenForExtension.Contexts
                 }
                 catch (Exception ex)
                 {
+                    rollbackErrors.Add(ex);
                     if (logAction != null)
                     {
-                        if (State != null)
-                        {
-                            State.Exception = ex;
-                            await logAction(this);
-                        }
+                        if ((object)State is IDictionary<string, object> stateBag)
+                            stateBag["Exception"] = ex;
+                       
+                        await logAction(this);
                     }
-                    throw;
                 }
             }
+            if (rollbackErrors.Count > 0)
+                throw new AggregateException("One or more rollback actions failed.", rollbackErrors);
         }
 
         public void AddRollBackAction(Func<Task> rollBackAction)
         {
-            if (rollBackAction != null)
-            {
-                RollBackActions.Push(rollBackAction);
-            }
+            if (rollBackAction == null)
+                throw new ArgumentNullException(nameof(rollBackAction));
+            
+            RollBackActions.Push(rollBackAction);
         }
         public static IContext New()
         {
