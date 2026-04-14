@@ -14,7 +14,7 @@ namespace Looplex.OpenForExtension.Contexts
         public IDictionary<string, dynamic> Roles { get; } = new Dictionary<string, dynamic>();
         public IList<IPlugin> Plugins { get; private set; }
         public object Result { get; set; }
-        public Stack<Func<Task>> RollBackActions { get; set; } = new Stack<Func<Task>>();
+        public Stack<Func<Task>> RollBackActions { get; } = new Stack<Func<Task>>();
         public async Task DoRollBack(Func<IContext, Task> logAction = null)
         {
             while (RollBackActions != null && RollBackActions.Count > 0)
@@ -34,13 +34,17 @@ namespace Looplex.OpenForExtension.Contexts
                             await logAction(this);
                         }
                     }
+                    throw;
                 }
             }
         }
 
         public void AddRollBackAction(Func<Task> rollBackAction)
         {
-            RollBackActions.Push(rollBackAction);
+            if (rollBackAction != null)
+            {
+                RollBackActions.Push(rollBackAction);
+            }
         }
         public static IContext New()
         {
