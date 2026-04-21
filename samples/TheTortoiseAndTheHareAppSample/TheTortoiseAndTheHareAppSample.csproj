@@ -9,11 +9,11 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.2" />
-	<PackageReference Include="Looplex.OpenForExtension" Version="1.1.8" />
-    <PackageReference Include="Looplex.OpenForExtension.Loader" Version="1.1.8" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\src\Looplex.OpenForExtension.Loader\Looplex.OpenForExtension.Loader.csproj" />
+    <ProjectReference Include="..\..\src\Looplex.OpenForExtension\Looplex.OpenForExtension.csproj" />
     <ProjectReference Include="..\TheTortoiseAndTheHareAppSample.Domain\TheTortoiseAndTheHareAppSample.Domain.csproj" />
   </ItemGroup>
 

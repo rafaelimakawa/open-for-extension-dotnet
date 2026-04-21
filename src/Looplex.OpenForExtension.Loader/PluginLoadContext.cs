@@ -15,6 +15,10 @@ namespace Looplex.OpenForExtension.Loader
         protected override Assembly? Load(AssemblyName assemblyName)
         {
             string? assemblyPath = _resolver.ResolveAssemblyToPath(assemblyName);
+            if (assemblyName.Name == "Looplex.OpenForExtension.Abstractions")
+            {
+                return null;
+            }
             if (assemblyPath != null)
             {
                 return LoadFromAssemblyPath(assemblyPath);

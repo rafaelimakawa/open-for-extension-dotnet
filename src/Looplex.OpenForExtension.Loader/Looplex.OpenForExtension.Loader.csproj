@@ -20,15 +20,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="README.md" Pack="true" PackagePath="\"/>
+    <None Include="README.md" Pack="true" PackagePath="\" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.Runtime.Loader" Version="4.3.0"/>
+    <PackageReference Include="System.Runtime.Loader" Version="4.3.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Looplex.OpenForExtension\Looplex.OpenForExtension.csproj"/>
+    <ProjectReference Include="..\Looplex.OpenForExtension\Looplex.OpenForExtension.csproj" />
   </ItemGroup>
 
 </Project>

@@ -24,5 +24,10 @@ namespace BoyInTheAudiencePlugin.Commands
             
             return Task.CompletedTask;
         }
+
+        public Task ExecuteRollBackAsync(IContext context)
+        {
+            return Task.CompletedTask;
+        }
     }
 }
