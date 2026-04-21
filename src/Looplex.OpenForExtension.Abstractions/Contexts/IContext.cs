@@ -12,9 +12,9 @@ namespace Looplex.OpenForExtension.Abstractions.Contexts
         dynamic State { get; }
         IDictionary<string, dynamic> Roles { get; }
         object Result { get; set; }
-        Stack<Func<Task>> RollBackActions { get; }
+        Stack<NamedRollBack> RollBackActions { get; }
 
         Task DoRollBack(Func<IContext, Task> logAction = null);
-        void AddRollBackAction(Func<Task> rollBackAction);
+        void AddRollBackAction(Func<Task> rollBackAction, string pluginName);
     }
 }

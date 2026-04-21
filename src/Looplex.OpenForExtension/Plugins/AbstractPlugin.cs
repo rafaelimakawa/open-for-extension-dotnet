@@ -26,7 +26,7 @@ namespace Looplex.OpenForExtension.Plugins
             foreach (var command in Commands.Where(c => typeof(T).IsAssignableFrom(c.GetType())))
             {
                 await command.ExecuteAsync(context, cancellationToken);
-                context.AddRollBackAction(() => command.ExecuteRollBackAsync(context));
+                context.AddRollBackAction(() => command.ExecuteRollBackAsync(context), Name);
             }
         }
 
